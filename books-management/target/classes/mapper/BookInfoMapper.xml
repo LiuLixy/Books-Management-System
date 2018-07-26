@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwstudy.booksmanagement.mapper.BookInfoMapper">
+
+    <sql id="basic_column">
+        book_id,
+        book_name,
+        book_type,
+        author,
+        publishing_house,
+        price
+    </sql>
+
+    <sql id="basic_alias_column">
+        book_id as 'bookId',
+        book_name as 'bookName',
+        book_type as 'bookType',
+        author as 'author',
+        publishing_house as 'publishingHouse',
+        price as 'price'
+    </sql>
+
+    <resultMap id="bookInfoMap" type="com.lwstudy.booksmanagement.entity.BookInfo">
+        <id property="bookId" column="book_id" jdbcType="VARCHAR"/>
+        <result property="bookName" column="book_name" jdbcType="VARCHAR"/>
+        <result property="bookType" column="book_type" jdbcType="VARCHAR"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
+        <result property="publishingHouse" column="publishing_house" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <insert id="insertBookInfo" parameterType="com.lwstudy.booksmanagement.entity.BookInfo"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into book_info
+        (book_id, book_name, book_type, author, publishing_house, price)
+        values (#{bookId}, #{bookName}, #{bookType}, #{author}, #{publishingHouse}, #{price})
+    </insert>
+
+    <update id="updateBookInfoByObject"
+            parameterType="com.lwstudy.booksmanagement.entity.BookInfo">
+        update book_info
+        <set>
+            <if test="bookName!=null">
+                book_name = #{bookName},
+            </if>
+            <if test="bookType!=null">
+                book_type = #{bookType},
+            </if>
+            <if test="author!=null">
+                author = #{author},
+            </if>
+            <if test="publishingHouse!=null">
+                publishing_house = #{publishingHouse},
+            </if>
+            <if test="price>0">
+                price = #{price},
+            </if>
+        </set>
+        where book_id = #{bookId}
+    </update>
+
+
+    <delete id="deleteBookInfoById">
+        delete from book_info
+        where book_id = #{bookId}
+    </delete>
+
+    <select id="queryBookInfoAll" resultType="com.lwstudy.booksmanagement.entity.BookInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from book_info
+    </select>
+
+    <select id="queryBookInfoById" resultType="com.lwstudy.booksmanagement.entity.BookInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from book_info
+        where book_id = #{bookId}
+    </select>
+
+    <select id="queryBookInfoByName" resultType="com.lwstudy.booksmanagement.entity.BookInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from book_info
+        where book_name = #{bookName}
+    </select>
+
+
+</mapper>
