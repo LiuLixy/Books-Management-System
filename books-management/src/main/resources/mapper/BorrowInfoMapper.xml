@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwstudy.booksmanagement.mapper.BorrowInfoMapper">
+
+    <sql id="basic_column">
+        book_id,
+        book_card_id,
+        user_id,
+        user_name,
+        borrow_time,
+        deadline_time,
+        is_renew
+    </sql>
+
+    <sql id="basic_alias_column">
+        book_id as 'bookId',
+        book_card_id as 'bookCardId',
+        user_id as 'userId',
+        user_name as 'userName',
+        borrow_time as 'borrowTime',
+        deadline_time as 'deadlineTime',
+        is_renew as 'renew'
+    </sql>
+
+    <resultMap id="userInfoMap" type="com.lwstudy.booksmanagement.entity.BorrowInfo">
+        <id property="bookId" column="book_id" jdbcType="VARCHAR"/>
+        <result property="bookCardId" column="book_card_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="borrowTime" column="borrow_time" jdbcType="TIMESTAMP"/>
+        <result property="deadlineTime" column="deadline_time" jdbcType="TIMESTAMP"/>
+        <result property="renew" column="is_renew" jdbcType="CHAR"/>
+    </resultMap>
+
+    <insert id="insertBorrowInfo" parameterType="com.lwstudy.booksmanagement.entity.BorrowInfo"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into borrow_info
+        (book_id, book_card_id, user_id, user_name, borrow_time, deadline_time, is_renew)
+        values (#{bookId}, #{bookCardId}, #{userId}, #{userName}, #{borrowTime}, #{deadlineTime}, #{renew})
+    </insert>
+
+    <update id="updateBorrowInfoByObject">
+        update borrow_info
+         <set>
+             <if test="bookCardId!=null">
+                 book_card_id = #{bookCardId},
+             </if>
+             <if test="userId!=null">
+                 user_id = #{userId},
+             </if>
+             <if test="userName!=null">
+                 user_name = #{userName},
+             </if>
+             <if test="borrowTime!=null">
+                 borrow_time = #{borrowTime},
+             </if>
+             <if test="deadlineTime!=null">
+                 deadline_time = #{deadlineTime},
+             </if>
+             <if test="renew!=null">
+                 is_renew = #{renew},
+             </if>
+         </set>
+        where book_id = #{bookId}
+    </update>
+
+    <delete id="deleteBorrowInfoByBookId">
+        delete from borrow_info
+        where book_id = #{bookId}
+    </delete>
+
+    <select id="queryBorrowInfoAll" resultType="com.lwstudy.booksmanagement.entity.BorrowInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from borrow_info
+    </select>
+
+    <select id="queryBorrowInfoByBookId" resultType="com.lwstudy.booksmanagement.entity.BorrowInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from borrow_info
+        where book_id = #{bookId}
+    </select>
+    <select id="queryBorrowInfoByUserId" resultType="com.lwstudy.booksmanagement.entity.BorrowInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from borrow_info
+        where user_id = #{userId}
+    </select>
+
+</mapper>
