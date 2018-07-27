@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwstudy.booksmanagement.mapper.UserInfoMapper">
+
+    <sql id="basic_column">
+        user_id,
+        user_name,
+        gender,
+        telephone,
+        institute,
+        user_class,
+        book_card_id
+    </sql>
+
+    <sql id="basic_alias_column">
+        user_id as 'userId',
+        user_name as 'userName',
+        gender as 'userGender',
+        telephone as 'telephone',
+        institute as 'institute',
+        user_class as 'userClass',
+        book_card_id as 'bookCardId'
+    </sql>
+
+    <resultMap id="userInfoMap" type="com.lwstudy.booksmanagement.entity.UserInfo">
+        <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userGender" column="gender" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="institute" column="institute" jdbcType="VARCHAR"/>
+        <result property="bookCardId" column="book_card_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertUserInfo" parameterType="com.lwstudy.booksmanagement.entity.UserInfo"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into user_info
+        (user_id, user_name, gender, telephone, institute, user_class, book_card_id)
+        values (#{userId}, #{userName}, #{userGender}, #{telephone}, #{institute}, #{userClass}, #{bookCardId})
+    </insert>
+
+    <update id="updateUserInfoByObject" parameterType="com.lwstudy.booksmanagement.entity.UserInfo">
+        update user_info
+        <set>
+            <if test="userName!=null">
+                user_name = #{userName},
+            </if>
+            <if test="userGender!=null">
+                gender = #{userGender},
+            </if>
+            <if test="telephone!=null">
+                telephone = #{telephone},
+            </if>
+            <if test="institute!=null">
+                institute = #{institute},
+            </if>
+            <if test="userClass!=null">
+                user_class = #{userClass},
+            </if>
+            <if test="bookCardId!=null">
+                book_card_id = #{bookCardId},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+
+    <delete id="deleteUserInfoById">
+      delete from user_info
+      where user_id = #{userId}
+    </delete>
+
+    <select id="queryUserInfoAll" resultType="com.lwstudy.booksmanagement.entity.UserInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from user_info
+    </select>
+    <select id="queryUserInfoById" resultType="com.lwstudy.booksmanagement.entity.UserInfo">
+        select
+        <include refid="basic_alias_column"/>
+        from user_info
+        where user_id = #{userId}
+    </select>
+
+</mapper>
