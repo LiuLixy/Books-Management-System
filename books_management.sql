@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) DEFAULT NULL,
-  `password` varchar(20) DEFAULT NULL,
+  `id` int(11) NOT NULL COMMENT '管理员编号',
+  `name` varchar(20) NOT NULL '管理员姓名',
+  `password` varchar(20) NOT NULL '管理员密码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

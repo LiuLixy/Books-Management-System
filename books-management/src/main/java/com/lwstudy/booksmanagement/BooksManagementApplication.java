@@ -2,9 +2,11 @@ package com.lwstudy.booksmanagement;
 
 import com.lwstudy.booksmanagement.common.BookType;
 import com.lwstudy.booksmanagement.common.UserGender;
+import com.lwstudy.booksmanagement.entity.AdminInfo;
 import com.lwstudy.booksmanagement.entity.BookInfo;
 import com.lwstudy.booksmanagement.entity.BorrowInfo;
 import com.lwstudy.booksmanagement.entity.UserInfo;
+import com.lwstudy.booksmanagement.mapper.AdminInfoMapper;
 import com.lwstudy.booksmanagement.mapper.BookInfoMapper;
 import com.lwstudy.booksmanagement.mapper.BorrowInfoMapper;
 import com.lwstudy.booksmanagement.mapper.UserInfoMapper;
@@ -41,6 +43,7 @@ class Menu {
         System.out.println("*** 17.根据图书编号删除借阅信息          0.退出系统 ***");
     }
 }
+
 
 class test {
 
@@ -342,8 +345,43 @@ class test {
 
 public class BooksManagementApplication {
 
-    public static void main(String[] args) {
-        new test();
+    private static SqlSessionFactory sqlSessionFactory;
+
+    static {
+        try {
+            sqlSessionFactory = new SqlSessionFactoryBuilder()
+                    .build(Resources.getResourceAsStream("mybatis-config.xml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public static void main(String[] args) {
+        login();
+    }
+    public static void login() {
+
+        System.out.println("*****    欢迎使用该图书管理系统   *****");
+        System.out.println("*****            请先登录         *****");
+
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+        AdminInfoMapper adminInfoMapper = sqlSession.getMapper(AdminInfoMapper.class);
+
+        Scanner scanner = new Scanner(System.in);
+        AdminInfo adminInfo = new AdminInfo();
+        System.out.print("请输入您的编号: ");
+        adminInfo.setId(scanner.nextInt());
+        System.out.print("请输入用户名: ");
+        adminInfo.setName(scanner.nextLine());
+        System.out.print("请输入密码: ");
+        adminInfo.setPassword(scanner.nextLine());
+        int result = adminInfoMapper.queryAdminByObject(adminInfo);
+
+        if (result == 1) {
+            new test();
+        } else {
+            System.out.println("您的信息输入错误...");
+            return;
+        }
+    }
 }
