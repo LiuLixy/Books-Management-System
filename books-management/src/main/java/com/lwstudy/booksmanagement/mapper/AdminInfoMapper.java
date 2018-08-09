@@ -2,17 +2,13 @@ package com.lwstudy.booksmanagement.mapper;
 
 import com.lwstudy.booksmanagement.entity.AdminInfo;
 
+import java.util.List;
+
 /**
  * @Author: LiuWang
  * @Created: 2018/7/30 19:32
  */
 public interface AdminInfoMapper {
-    /**
-     * 通过输入的信息登录系统
-     * @param adminInfo
-     * @return
-     */
-    int queryAdminByObject(AdminInfo adminInfo);
 
     /**
      * 添加管理员
@@ -35,4 +31,17 @@ public interface AdminInfoMapper {
      * @return
      */
     int updateAdmin(int id, String password);
+
+    /**
+     * 通过输入的信息登录系统
+     * @param adminInfo
+     * @return
+     */
+    int queryAdminByObject(AdminInfo adminInfo);
+
+    /**
+     * 查询所有管理员信息
+     * @return
+     */
+    List<AdminInfo> queryAllAdmin();
 }
