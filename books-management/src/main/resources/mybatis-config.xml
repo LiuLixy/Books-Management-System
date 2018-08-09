@@ -16,6 +16,9 @@
     <!-- 自定义类型别名-->
     <typeAliases>
         <typeAlias alias="BookInfo" type="com.lwstudy.booksmanagement.entity.BookInfo"/>
+        <!--<typeAlias alias="BorrowInfo" type="com.lwstudy.booksmanagement.entity.BorrowInfo"/>-->
+        <!--<typeAlias alias="AdminInfo" type="com.lwstudy.booksmanagement.entity.AdminInfo"/>-->
+        <!--<typeAlias alias="UserInfo" type="com.lwstudy.booksmanagement.entity.UserInfo"/>-->
     </typeAliases>
 
 
