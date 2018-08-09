@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lwstudy.booksmanagement.mapper.AdminInfoMapper">>
-
-
-    <resultMap id="AdminInfoMap" type="com.lwstudy.booksmanagement.entity.AdminInfo">
-        <id property="id" column="id" jdbcType="INT"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="password" column="password" jdbcType="VARCHAR"/>
-    </resultMap>
+<mapper namespace="com.lwstudy.booksmanagement.mapper.AdminInfoMapper">
 
     <sql id="basic_column">
        id,
@@ -15,10 +8,28 @@
        password
     </sql>
 
-    <insert id="insertAdmin">
+    <sql id="basic_alias_column">
+       id as 'id',
+       name as 'name',
+       password as 'password'
+    </sql>
+
+    <resultMap id="adminInfoMap" type="com.lwstudy.booksmanagement.entity.AdminInfo">
+        <id property="id" column="id" jdbcType="INT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertAdmin" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into admin (id, name, password) values
         (#{id}, #{name}, #{password})
     </insert>
+
+    <delete id="deleteAdminById">
+        delete from admin
+        where id = #{id}
+    </delete>
+
     <update id="updateAdmin">
         update admin
         <set>
@@ -29,16 +40,18 @@
         while id = #{id}
     </update>
 
-    <delete id="deleteAdminById">
-        delete from admin
-        where id = #{id}
-    </delete>
 
     <select id="queryAdminByObject" resultType="java.lang.Integer">
         select
-        <include refid="basic_column"/>
+        <include refid="basic_alias_column"/>
         from admin
         where id = #{id}, name = #{name}, password = #{password}
+    </select>
+
+    <select id="queryAllAdmin" resultType="com.lwstudy.booksmanagement.entity.AdminInfo" resultMap="adminInfoMap">
+        select
+        <include refid="basic_alias_column"/>
+        from admin
     </select>
 
 </mapper>
