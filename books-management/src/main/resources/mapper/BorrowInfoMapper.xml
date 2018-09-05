@@ -22,7 +22,7 @@
         is_renew as 'renew'
     </sql>
 
-    <resultMap id="userInfoMap" type="com.lwstudy.booksmanagement.entity.BorrowInfo">
+    <resultMap id="borrowInfoMap" type="com.lwstudy.booksmanagement.entity.BorrowInfo">
         <id property="bookId" column="book_id" jdbcType="VARCHAR"/>
         <result property="bookCardId" column="book_card_id" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" jdbcType="VARCHAR"/>

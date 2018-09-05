@@ -58,7 +58,7 @@ public class UserInfoMapperTest {
     public void test_deleteUserInfoById() {
         SqlSession sqlSession = sqlSessionFactory.openSession(true);
         UserInfoMapper userInfoMapper = sqlSession.getMapper(UserInfoMapper.class);
-        int effect = userInfoMapper.deleteUserInfoById("15050418101");
+        int effect = userInfoMapper.deleteUserInfoById("15050418104");
         logger.info("delete id = 10550418101 result = {} ", effect);
         sqlSession.close();
     }

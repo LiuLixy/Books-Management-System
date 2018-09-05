@@ -48,6 +48,7 @@ class Menu {
 class test {
 
     private static SqlSessionFactory sqlSessionFactory;
+
     private final Logger logger = LoggerFactory.getLogger(BooksManagementApplication.class);
 
     static {
@@ -343,9 +344,10 @@ class test {
     }
 }
 
-public class BooksManagementApplication {
-
+class login {
     private static SqlSessionFactory sqlSessionFactory;
+
+    private final Logger logger = LoggerFactory.getLogger(BooksManagementApplication.class);
 
     static {
         try {
@@ -356,11 +358,7 @@ public class BooksManagementApplication {
         }
     }
 
-    public static void main(String[] args) {
-        login();
-    }
-    public static void login() {
-
+    public login() {
         System.out.println("*****    欢迎使用该图书管理系统   *****");
         System.out.println("*****            请先登录         *****");
 
@@ -383,5 +381,13 @@ public class BooksManagementApplication {
             System.out.println("您的信息输入错误...");
             return;
         }
+    }
+
+}
+
+public class BooksManagementApplication {
+
+    public static void main(String[] args) {
+        new test();
     }
 }
